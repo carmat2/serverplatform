@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -10,11 +9,11 @@ func Test_decoderMsgData_validMsg(t *testing.T) {
 	const jsonMsgOpenSession = `{"name":"opensession","dest":"sp","payload":[{"plugin":"helloworld","token":"123"}]}`
 	dataRead := []byte(jsonMsgOpenSession)
 
-	fmt.Printf("\r\n ****** testing decoderMsgData - valid msg %s", string(dataRead))
+	logger.Tracef("****** testing decoderMsgData - valid msg %s", string(dataRead))
 	d := NewDecoderMsgData()
 	d.setDataLen(len(dataRead))
 	processed, err := d.processReadData(dataRead)
-	fmt.Printf("processed %d, err %v \r\n", processed, err)
+	logger.Tracef("processed %d, err %v", processed, err)
 	if processed != len(dataRead) {
 		t.Error("incorrect processed value - expected / received", len(dataRead), processed)
 	}

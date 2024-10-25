@@ -24,3 +24,12 @@ The **message** common fields are *name*, *dest* and *payload*
 - *name* is a unique message name
 - *dest* must be set to *sp* if the message is to be decoded by the serverplatform, or *pl* if the message is to be decoded by the Plugin
 - *payload* is an array containing json fields with message-specific data
+
+
+## Logging
+
+Logging uses [logr](https://github.com/mattermost/logr).
+Two log targets are defined: 
+- for unit test runs, a Stdout target logging from the Trace level using a plain formatter
+- for application runs, a File target logging to ./logs/serverplatform.log from the Info level using a Json formatter.
+Both log targets will log the stacktrace from the Error level.

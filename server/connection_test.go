@@ -8,27 +8,23 @@ import(
 )
 
 func TestMain(m *testing.M) {
+	CreateLogger(true)
+
 	a := NewAcceptor("localhost:8081")
 	go a.Accept()
 
-	fmt.Println("testing connection - acceptor started in listen mode")
+	logger.Trace("testing connection - acceptor started in listen mode")
 	time.Sleep(5*time.Second)
 
 	m.Run()
+
+	ShutdownLogger()
 }
 
 func Test_Connection_Read(t *testing.T) {   
-	fmt.Println("\r\n ****** testing connection read")
+	logger.Trace("Testing connection read")
 
-	addr, err := net.ResolveTCPAddr("tcp", "localhost:8081")
-    if err != nil {
-        t.Error("Failed to resolve TCP address localhost:8081")
-    }
-
-    conn, err := net.DialTCP("tcp", nil, addr)
-    if err != nil {
-        t.Error("TCP connection to address localhost:8081 failed")
-    }
+	conn := connect(t)
 
 	write("$SIGNA", conn, t)
 
@@ -48,17 +44,9 @@ func Test_Connection_Read(t *testing.T) {
 }
 
 func Test_Connection_Read_invalidData(t *testing.T) {   
-	fmt.Println("\r\n ****** testing connection read with invalid signature")
+	logger.Trace("Testing connection read with invalid signature")
 
-	addr, err := net.ResolveTCPAddr("tcp", "localhost:8081")
-    if err != nil {
-        t.Error("Failed to resolve TCP address localhost:8081")
-    }
-
-    conn, err := net.DialTCP("tcp", nil, addr)
-    if err != nil {
-        t.Error("TCP connection to address localhost:8081 failed")
-    }
+	conn := connect(t)
 
 	write("$SIGNATUR#", conn, t)
 
@@ -66,8 +54,17 @@ func Test_Connection_Read_invalidData(t *testing.T) {
 }
 
 func Test_Connection_Close(t *testing.T) {
-	fmt.Println("\r\n ****** testing connection close")
+	logger.Trace("Testing connection close")
 
+	conn := connect(t)
+
+	write("$SIGNA", conn, t)
+
+	time.Sleep(5*time.Second)
+	conn.Close()
+}
+
+func connect(t *testing.T) (*net.TCPConn) {
 	addr, err := net.ResolveTCPAddr("tcp", "localhost:8081")
     if err != nil {
         t.Error("Failed to resolve TCP address localhost:8081")
@@ -78,10 +75,7 @@ func Test_Connection_Close(t *testing.T) {
         t.Error("TCP connection to address localhost:8081 failed")
     }
 
-	write("$SIGNA", conn, t)
-
-	time.Sleep(5*time.Second)
-	conn.Close()
+	return conn
 }
 
 func write(data string, conn *net.TCPConn, t *testing.T){
@@ -89,5 +83,5 @@ func write(data string, conn *net.TCPConn, t *testing.T){
     if err != nil {
 		t.Error("TCP write to server failed", err)
     }
-	fmt.Printf("testing connection - write data completed %s, byte count %d\r\n", data, count)
+	logger.Tracef("testing connection - write data completed %s, byte count %d", data, count)
 }

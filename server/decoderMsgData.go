@@ -5,13 +5,13 @@ import (
 	"fmt"
 )
 
-// decodeMsgData is the processor decoding protocol messages
+// decodeMsgData is the processor decoding protocol messages.
 type decoderMsgData struct {
 	processorBase
 	msg MessageBase
 }
 
-// NewDecoderMsgData creates a new decoderMsgData instance
+// NewDecoderMsgData creates a new decoderMsgData instance.
 func NewDecoderMsgData() *decoderMsgData {
 	d := &decoderMsgData{
 		processorBase {
@@ -25,7 +25,7 @@ func NewDecoderMsgData() *decoderMsgData {
 	return d
 }
 // processReadComplete first decodes the base message json values (name, dest and payload),
-// then it decodes all serverplatform dest messsages from the message payload, and requests the plugin to decode plugin dest messages
+// then it decodes all serverplatform dest messsages from the message payload, and requests the plugin to decode plugin dest messages.
 func (d *decoderMsgData) processReadComplete() (err Errorer) {
 	// reset the decoder internal state
 	d.totalProcessed = 0
@@ -59,9 +59,9 @@ func (d *decoderMsgData) processReadComplete() (err Errorer) {
 	return nil
 }
 
-// processReadData copies bytes from the dataRead buffer into the decoderMsgData interval buffer up to the current msg size
-// if more read bytes are required it returns a needMoreConnRead Errorrer to request a new connection read
-// if all message bytes were received it decodes the message and passes it to the processing handler
+// processReadData copies bytes from the dataRead buffer into the decoderMsgData interval buffer up to the current msg size.
+// If more read bytes are required it returns a needMoreConnRead Errorrer to request a new connection read.
+// If all message bytes were received it decodes the message and passes it to the processing handler.
 func (d *decoderMsgData) processReadData(dataRead []byte) (int, Errorer) {
 	d.msg = nil
 	
@@ -74,7 +74,7 @@ func (d *decoderMsgData) processReadData(dataRead []byte) (int, Errorer) {
 	return processed, err
 }
 
-// getNextProcessor returns the validator next connection processor - nil, to be replaced by the handler processor
+// getNextProcessor returns the validator next connection processor - nil, to be replaced by the handler processor.
 func (d *decoderMsgData) getNextProcessor() (processor) {
 	return d.pNext
 }

@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -51,11 +50,11 @@ func Test_decoderMsgSize_invalidMsgSize(t *testing.T) {
 }
 
 func decoderMsgSize_validMsgSize(dataRead []byte, expected int, t *testing.T) {
-	fmt.Printf("\r\n ****** testing decoderMsgSize - valid msg size %s\r\n", string(dataRead))
+	logger.Tracef("****** testing decoderMsgSize - valid msg size %s", string(dataRead))
 	d := NewDecoderMsgSize()
 	d.setDataLen(msgSizeLength)
 	processed, err := d.processReadData(dataRead)
-	fmt.Printf("processed %d, err %v\r\n", processed, err)
+	logger.Tracef("processed %d, err %v", processed, err)
 	if processed != 6 {
 		t.Error("incorrect processed value - expected 6, received", processed)
 	}
@@ -68,11 +67,11 @@ func decoderMsgSize_validMsgSize(dataRead []byte, expected int, t *testing.T) {
 }
 
 func decoderMsgSize_invalidMsgSize(dataRead []byte, errExpected status, t *testing.T) {
-	fmt.Printf("\r\n ****** testing decoderMsgSize - invalid msg size %s, error expected %d\r\n", string(dataRead), errExpected)
+	logger.Tracef("****** testing decoderMsgSize - invalid msg size %s, error expected %d", string(dataRead), errExpected)
 	d := NewDecoderMsgSize()
 	d.setDataLen(msgSizeLength)
 	processed, err := d.processReadData(dataRead)
-	fmt.Printf("processed %d, err %v\r\n", processed, err)
+	logger.Tracef("processed %d, err %v", processed, err)
 	if processed != 6 {
 		t.Error("incorrect processed value - expected 6, received", processed)
 	}
