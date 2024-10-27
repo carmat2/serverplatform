@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	server.CreateLogger(false)
+	server.CreateLoggerTarget()
 	defer server.ShutdownLogger()
 
 	a := server.NewAcceptor("localhost:8081")

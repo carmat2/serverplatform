@@ -8,7 +8,7 @@ import(
 )
 
 func TestMain(m *testing.M) {
-	CreateLogger(true)
+	CreateLoggerTargetTesting()
 
 	a := NewAcceptor("localhost:8081")
 	go a.Accept()
