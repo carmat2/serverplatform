@@ -29,7 +29,10 @@ The **message** common fields are *name*, *dest* and *payload*
 ## Logging
 
 Logging uses [logr](https://github.com/mattermost/logr).
-Two log targets are defined: 
-- for unit test runs, a Stdout target logging from the Trace level using a plain formatter
+Three log targets are defined:
+
+- for unit test runs, a Stdout target logging from the Trace level using a plain formatter.
 - for application runs, a File target logging to ./logs/serverplatform.log from the Info level using a Json formatter.
 Both log targets will log the stacktrace from the Error level.
+
+- a custom log target to send email alerts from the Fatal level.
