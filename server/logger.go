@@ -96,15 +96,15 @@ func NewLogTargetEmail() *logTargetEmail {
 // Creates and intializes the gmail service
 func (t *logTargetEmail) Init() error {
 	config := oauth2.Config{
-    	ClientID:     "638856403285-mkifhml46g0pn7037cgmmdiv89uvrpri.apps.googleusercontent.com",
-    	ClientSecret: "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",
+    	ClientID:     "hidden",
+    	ClientSecret: "hidden",
     	Endpoint:     google.Endpoint,
     	RedirectURL:  "http://localhost",
   	}
 
   	token := oauth2.Token{
-    	AccessToken:  "ya29.a0AeDClZD276fk0kRmWENu4G7Gq0g82n8WXh_SciXmvEVU1IdMKoukNg5TW8b2DgBwnyoynC1SpXEVoHruS4icFj5oWwqbW0JxF9Z0tkFd3qveFj0c0KCFr68EvF3rnm7Yr49UpioviDERmM-drRRjrs5G4GU_AZsma6NOv3DraCgYKAVUSARMSFQHGX2MiFjvzvCK3EVz7Nzc4W9ZgYg0175",
-    	RefreshToken: "1//04xHxN4AcSZYsCgYIARAAGAQSNwF-L9IrjQPRNbEx4JidMoW3tTB1eOTX8ZchOyCbnu23w9yx49Qb7HggPIgwWxICNRPwHebAVVY",
+    	AccessToken:  "hidden",
+    	RefreshToken: "hidden",
     	TokenType:    "Bearer",
     	Expiry:       time.Now(),
   	}
@@ -127,8 +127,8 @@ func (t *logTargetEmail) Init() error {
 func (t *logTargetEmail) Write(p []byte) (int, error) {
 	var message gmail.Message
   
-	toEmail := "cristian.armat@gmail.com"
-	srcEmail := "serverplatform01@gmail.com"
+	toEmail := "hidden"
+	srcEmail := "hidden"
 	srcDisplayName := "ServerPlatform v1"
 	fromMail := fmt.Sprintf("From: %s <%s> \r\n", srcDisplayName, srcEmail)
 	emailTo := "To: " + toEmail + "\r\n"
